@@ -1,0 +1,30 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(git merge:*)",
+      "Bash(git remote:*)",
+      "Bash(git checkout:*)",
+      "Bash(git push:*)",
+      "Bash(pnpm typecheck:*)",
+      "Bash(pnpm dev:*)",
+      "Bash(chmod:*)",
+      "Bash(pnpm test:*)",
+      "Bash(tsx scripts/check-i18n-keys.ts:*)",
+      "Bash(npx tsx:*)",
+      "Bash(pnpm dlx tsx:*)",
+      "Bash(node:*)",
+      "Bash(grep:*)",
+      "Bash(pnpm lint:*)",
+      "Bash(pnpm build:packages:*)",
+      "Bash(pnpm build:*)",
+      "Bash(timeout:*)",
+      "Bash(git log:*)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash(git reset:*)",
+      "Bash(git branch:*)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}
