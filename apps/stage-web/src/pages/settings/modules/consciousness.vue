@@ -1,8 +1,9 @@
 <script setup lang="ts">
 import { Alert, ErrorContainer, RadioCardManySelect, RadioCardSimple } from '@proj-airi/stage-ui/components'
-import { useConsciousnessStore, useProvidersStore } from '@proj-airi/stage-ui/stores'
+import { useConsciousnessStore } from '@proj-airi/stage-ui/stores/modules/consciousness'
+import { useProvidersStore } from '@proj-airi/stage-ui/stores/providers'
 import { storeToRefs } from 'pinia'
-import { onMounted } from 'vue'
+import { watch } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { RouterLink } from 'vue-router'
 
@@ -22,9 +23,9 @@ const {
 
 const { t } = useI18n()
 
-onMounted(async () => {
-  await consciousnessStore.loadModelsForProvider(activeProvider.value)
-})
+watch(activeProvider, async (provider) => {
+  await consciousnessStore.loadModelsForProvider(provider)
+}, { immediate: true })
 
 function updateCustomModelName(value: string) {
   customModelName.value = value

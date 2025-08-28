@@ -10,13 +10,15 @@ import {
   TestDummyMarker,
   VoiceCardManySelect,
 } from '@proj-airi/stage-ui/components'
-import { useProvidersStore, useSpeechStore } from '@proj-airi/stage-ui/stores'
+import { useSpeechStore } from '@proj-airi/stage-ui/stores/modules/speech'
+import { useProvidersStore } from '@proj-airi/stage-ui/stores/providers'
 import {
   FieldCheckbox,
   FieldInput,
   FieldRange,
   Textarea,
 } from '@proj-airi/ui'
+import { watchDebounced } from '@vueuse/core'
 import { generateSpeech } from '@xsai/generate-speech'
 import { storeToRefs } from 'pinia'
 import { onMounted, onUnmounted, ref, watch } from 'vue'
@@ -58,9 +60,19 @@ onMounted(async () => {
   await speechStore.loadVoicesForProvider(activeSpeechProvider.value)
 })
 
-watch(activeSpeechProvider, async () => {
+watchDebounced(activeSpeechProvider, async () => {
   await providersStore.loadModelsForConfiguredProviders()
   await speechStore.loadVoicesForProvider(activeSpeechProvider.value)
+}, { debounce: 100 })
+
+watch(activeSpeechVoiceId, (newId) => {
+  if (newId) {
+    const voices = availableVoices.value[activeSpeechProvider.value] || []
+    const existingVoice = voices.find(voice => voice.id === newId)
+    if (!existingVoice) {
+      updateCustomVoiceName(newId)
+    }
+  }
 })
 
 // Function to generate speech
@@ -347,10 +359,11 @@ function updateCustomModelName(value: string) {
           <!-- No voices available -->
           <Alert v-else type="warning">
             <template #title>
-              No voices available
+              {{ t('settings.pages.modules.speech.sections.section.provider-voice-selection.no_voices') }}
             </template>
             <template #content>
-              No voices were found for this provider. You can enter a custom voice name below.
+              {{ t('settings.pages.modules.speech.sections.section.provider-voice-selection.no_voices_description') }}.
+              {{ t('settings.pages.modules.speech.sections.section.provider-voice-selection.no_voices_hint') }}
             </template>
           </Alert>
 
@@ -403,16 +416,6 @@ function updateCustomModelName(value: string) {
                   Multilingual v2
                 </option>
               </select>
-            </div>
-
-            <div flex="~ col gap-4">
-              <FieldRange
-                v-model="pitch"
-                label="Pitch"
-                description="Tune the pitch of the voice"
-                :min="-100" :max="100" :step="1"
-                :format-value="value => `${value}%`"
-              />
             </div>
           </div>
         </div>

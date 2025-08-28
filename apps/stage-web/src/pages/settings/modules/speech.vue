@@ -10,7 +10,8 @@ import {
   TestDummyMarker,
   VoiceCardManySelect,
 } from '@proj-airi/stage-ui/components'
-import { useProvidersStore, useSpeechStore } from '@proj-airi/stage-ui/stores'
+import { useSpeechStore } from '@proj-airi/stage-ui/stores/modules/speech'
+import { useProvidersStore } from '@proj-airi/stage-ui/stores/providers'
 import {
   FieldCheckbox,
   FieldInput,
@@ -350,10 +351,11 @@ function updateCustomModelName(value: string) {
             class="mb-2"
           >
             <template #title>
-              No voices available
+              {{ t('settings.pages.modules.speech.sections.section.provider-voice-selection.no_voices') }}
             </template>
             <template #content>
-              No voices were found for this provider. You can enter a custom voice name below.
+              {{ t('settings.pages.modules.speech.sections.section.provider-voice-selection.no_voices_description') }}.
+              {{ t('settings.pages.modules.speech.sections.section.provider-voice-selection.no_voices_hint') }}
             </template>
           </Alert>
 
@@ -406,16 +408,6 @@ function updateCustomModelName(value: string) {
                   Multilingual v2
                 </option>
               </select>
-            </div>
-
-            <div flex="~ col gap-4">
-              <FieldRange
-                v-model="pitch"
-                label="Pitch"
-                description="Tune the pitch of the voice"
-                :min="-100" :max="100" :step="1"
-                :format-value="value => `${value}%`"
-              />
             </div>
           </div>
         </div>
