@@ -23,7 +23,13 @@
       "Bash(git commit:*)",
       "Bash(git reset:*)",
       "Bash(git branch:*)",
-      "WebFetch(domain:github.com)"
+      "WebFetch(domain:github.com)",
+      "Bash(npx pnpm dev:*)",
+      "Bash(corepack:*)",
+      "Bash(pnpm:*)",
+      "Bash(npm install:*)",
+      "Bash(set COREPACK_ENABLE_STRICT=0)",
+      "Bash(npx:*)"
     ],
     "deny": [],
     "ask": []

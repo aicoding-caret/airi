@@ -1,0 +1,21 @@
+{
+  "name": "@services/unreal-vtuber",
+  "version": "0.0.1",
+  "private": true,
+  "description": "Backend service for the Unreal Engine VTuber, powered by Project AIRI.",
+  "main": "src/main.ts",
+  "scripts": {
+    "dev": "tsx watch src/main.ts",
+    "start": "node dist/main.js",
+    "build": "tsup"
+  },
+  "dependencies": {
+    "ws": "^8.18.0"
+  },
+  "devDependencies": {
+    "@types/ws": "^8.5.11",
+    "tsx": "^4.16.2",
+    "tsup": "^8.2.3",
+    "typescript": "^5.5.3"
+  }
+}
